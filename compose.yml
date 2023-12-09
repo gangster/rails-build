@@ -1,0 +1,22 @@
+version: '3'
+services:
+  # Rails app service for local development
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Expose port 8000
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://postgres:postgres@db:5432/rails_build_development
+    depends_on:
+      - db
+
+  # PostgreSQL service
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rails_build_development

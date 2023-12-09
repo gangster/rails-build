@@ -1,0 +1,20 @@
+version: '3'
+services:
+  # Rails app service
+  web:
+    image: ghcr.io/gangster/rails_build:main  # Use the production image from the specified repository
+    ports:
+      - "8000:8000"  # Expose port 8000
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: postgres://postgres:postgres@db:5432/rails_build_production
+    depends_on:
+      - db
+
+  # PostgreSQL service
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rails_build_production
